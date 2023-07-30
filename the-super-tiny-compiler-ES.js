@@ -76,16 +76,16 @@
  */
 
 /**
- * Today we're going to write a compiler together. But not just any compiler... A
- * super duper teeny tiny compiler! A compiler that is so small that if you
- * remove all the comments this file would only be ~200 lines of actual code.
+ * Hoy vamos a escribir juntos un compilador. Pero no cualquier compilador...Un
+ * compilador súper diminuto! Un compilador tan pequeño que si eliminas todos
+ * los comenentarios, este archivo solo tendría ~200 líneas de código real. 
  *
- * We're going to compile some lisp-like function calls into some C-like
- * function calls.
+ * Vamos a compilar algunas llamadas a funciones tipo Lisp en algunas llamadas de funciones 
+ * tipo C.
  *
- * If you are not familiar with one or the other. I'll just give you a quick intro.
+ * Si no estás familiarizado con ninguno de ellos, voy a darte una introducción rápida.
  *
- * If we had two functions `add` and `subtract` they would be written like this:
+ * Si tenemos dos funciones `add` y `subtract` serían escritos así: 
  *
  *                  LISP                      C
  *
@@ -93,16 +93,16 @@
  *   4 - 2          (subtract 4 2)            subtract(4, 2)
  *   2 + (4 - 2)    (add 2 (subtract 4 2))    add(2, subtract(4, 2))
  *
- * Easy peezy right?
+ * Bastante fácil, ¿verdad?
  *
- * Well good, because this is exactly what we are going to compile. While this
- * is neither a complete LISP or C syntax, it will be enough of the syntax to
- * demonstrate many of the major pieces of a modern compiler.
+ * Bien, porque esto es exactamente lo que vamos a compilar. Aunque esto no es una
+ * sintaxis completa de Lisp o C, será suficiente para demostrar muchas de las piezas
+ * principales de un compilador moderno.
  */
 
 /**
- * Most compilers break down into three primary stages: Parsing, Transformation,
- * and Code Generation
+ * La mayoría de los compiladores se dividen en tres etapas principales: Parseo,
+ * Transformación y Generación de código.
  *
  * 1. *Parsing* is taking raw code and turning it into a more abstract
  *    representation of the code.
