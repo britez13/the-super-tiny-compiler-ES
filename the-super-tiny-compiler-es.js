@@ -297,9 +297,13 @@
  *   }
  *
  * So for the above AST we would go:
+ * Por tanto, para el AST de arriba sería: 
  *
  *   1. Program - Starting at the top level of the AST
+ *   1. Program - Empezando en la parte superior del AST
  *   2. CallExpression (add) - Moving to the first element of the Program's body
+ *   2. CallExpression (add) - Moviendo al primer elemento del cuerpo del Program
+ *   3. NumberLiteral (2) - Moving to the first element of CallExpression's params
  *   3. NumberLiteral (2) - Moving to the first element of CallExpression's params
  *   4. CallExpression (subtract) - Moving to the second element of CallExpression's params
  *   5. NumberLiteral (4) - Moving to the first element of CallExpression's params
@@ -308,15 +312,23 @@
  * If we were manipulating this AST directly, instead of creating a separate AST,
  * we would likely introduce all sorts of abstractions here. But just visiting
  * each node in the tree is enough for what we're trying to do.
+ * Si fuéramos a manipular el AST directamente, en vez de crear un AST separado.
+ * probablemente aquí añadiríamos todo tipo de abstracciones. Pero solamente "visitando"
+ * cada nodo en el Árbol es suficiente para lo que estamos tratando de hacer.
  *
  * The reason I use the word "visiting" is because there is this pattern of how
  * to represent operations on elements of an object structure.
+ * La razón por la que uso la palabra "visitando" es porque existe este patrón de
+ * cómo representar operaciones en elementos de una estructura de objeto.
  *
  * Visitors
+ * Visitante
  * --------
  *
  * The basic idea here is that we are going to create a “visitor” object that
  * has methods that will accept different node types.
+ * La idea básica aquí es crear un objeto "visitante" que tiene métodos que 
+ * aceptará diferente tipos de nodos.
  *
  *   var visitor = {
  *     NumberLiteral() {},
@@ -325,9 +337,13 @@
  *
  * When we traverse our AST, we will call the methods on this visitor whenever we
  * "enter" a node of a matching type.
+ * Cuando ... nuestro AST, vamos a llamar a los métodos en este visitante donde sea
+ * 
  *
  * In order to make this useful we will also pass the node and a reference to
  * the parent node.
+ * Para que esto sea útil, vamos a pasar también el nodo y una referencia al nodo
+ * padre.
  *
  *   var visitor = {
  *     NumberLiteral(node, parent) {},
@@ -336,6 +352,8 @@
  *
  * However, there also exists the possibility of calling things on "exit". Imagine
  * our tree structure from before in list form:
+ * Sin embargo, existe también la posibilidad de llamar .... Imagina que nuestra
+ * estructura de árbol 
  *
  *   - Program
  *     - CallExpression
@@ -347,6 +365,7 @@
  * As we traverse down, we're going to reach branches with dead ends. As we
  * finish each branch of the tree we "exit" it. So going down the tree we
  * "enter" each node, and going back up we "exit".
+ * A medidade 
  *
  *   -> Program (enter)
  *     -> CallExpression (enter)
@@ -373,74 +392,102 @@
 
 /**
  * Code Generation
+ * Generación de código
  * ---------------
  *
  * The final phase of a compiler is code generation. Sometimes compilers will do
  * things that overlap with transformation, but for the most part code
  * generation just means take our AST and string-ify code back out.
+ * La fase final de un compilador es generación de código. A veces los compiladores
+ * harán cosas .. con la transformación, pero la mayor parte generación simplemente
+ * significa tomar nuestro AST y ... 
  *
  * Code generators work several different ways, some compilers will reuse the
  * tokens from earlier, others will have created a separate representation of
  * the code so that they can print nodes linearly, but from what I can tell most
  * will use the same AST we just created, which is what we’re going to focus on.
+ * Generadores de código funcionan ..., algunos compiladores reutilizarán los tókenes
+ * anteriores, otros 
  *
  * Effectively our code generator will know how to “print” all of the different
  * node types of the AST, and it will recursively call itself to print nested
  * nodes until everything is printed into one long string of code.
+ * 
  */
 
 /**
  * And that's it! That's all the different pieces of a compiler.
+ * Y ya está! Esos son las diferentes piezas de un compilador.
  *
  * Now that isn’t to say every compiler looks exactly like I described here.
  * Compilers serve many different purposes, and they might need more steps than
  * I have detailed.
+ * Ahora, eso no significa que cada compilador sea igual a lo que describo aquí.
+ * Los compiladores sirven para muchas cosas, y pueden llegar a necesitar fases de
+ * los que que he detallado. 
  *
  * But now you should have a general high-level idea of what most compilers look
  * like.
+ * Pero ahora deberías tener una idea general de cómo son la mayoría de los 
+ * compiladores
+ * 
  *
  * Now that I’ve explained all of this, you’re all good to go write your own
  * compilers right?
+ * Ahora que he explicado todo esto, ya puedes escribir tus propios compiladores,
+ * verdad?
  *
  * Just kidding, that's what I'm here to help with :P
+ * Es broma, para eso estoy yo aquí :P
  *
  * So let's begin...
+ * Así que empecemos...
  */
 
 /**
  * ============================================================================
  *                                   (/^▽^)/
  *                                THE TOKENIZER!
+ *                                EL TOKENIZADOR!
  * ============================================================================
  */
 
 /**
  * We're gonna start off with our first phase of parsing, lexical analysis, with
  * the tokenizer.
+ * Vamos a empezar con nuestra primera fase de parseo, análisis léxico, con el 
+ * tokenizador.
  *
  * We're just going to take our string of code and break it down into an array
  * of tokens.
+ * Vamos a tomar nuestra cádena de texto y descomponerlo en un array de tókenes.
  *
  *   (add 2 (subtract 4 2))   =>   [{ type: 'paren', value: '(' }, ...]
  */
 
 // We start by accepting an input string of code, and we're gonna set up two
 // things...
+// Empezaremos aceptando una cadena de texto, y vamos a inicializar dos variables...
 function tokenizer(input) {
 
   // A `current` variable for tracking our position in the code like a cursor.
+  // Una variable `current` para llevar registro de nuestra posición en el código .
   let current = 0;
 
   // And a `tokens` array for pushing our tokens to.
+  // Y un array `tokens` para añadir nuestros tókenes.
   let tokens = [];
 
   // We start by creating a `while` loop where we are setting up our `current`
+  // variable to be incremented as much as we want `inside` the loop.
+  // Empezaremos creando un ciclo `while` donde vamos a 
   // variable to be incremented as much as we want `inside` the loop.
   //
   // We do this because we may want to increment `current` many times within a
   // single loop because our tokens can be any length.
   while (current < input.length) {
 
+    // We're also going to store the `current` character in the `input`.
     // We're also going to store the `current` character in the `input`.
     let char = input[current];
 
@@ -589,6 +636,7 @@ function tokenizer(input) {
  * ============================================================================
  *                                 ヽ/❀o ل͜ o\ﾉ
  *                                THE PARSER!!!
+ *                               EL PARSEADOR!!!
  * ============================================================================
  */
 
@@ -748,6 +796,7 @@ function parser(tokens) {
  * ============================================================================
  *                                 ⌒(❀>◞౪◟<❀)⌒
  *                               THE TRAVERSER!!!
+ *                               EL TRAVERSER!!!
  * ============================================================================
  */
 
@@ -858,6 +907,7 @@ function traverser(ast, visitor) {
  * ============================================================================
  *                                   ⁽(◍˃̵͈̑ᴗ˂̵͈̑)⁽
  *                              THE TRANSFORMER!!!
+ *                              EL TRANSFORMADOR!!!
  * ============================================================================
  */
 
@@ -868,6 +918,7 @@ function traverser(ast, visitor) {
  *
  * ----------------------------------------------------------------------------
  *   Original AST                     |   Transformed AST
+ *   AST orginal                      |   AST transformado
  * ----------------------------------------------------------------------------
  *   {                                |   {
  *     type: 'Program',               |     type: 'Program',
@@ -996,6 +1047,7 @@ function transformer(ast) {
  * ============================================================================
  *                               ヾ（〃＾∇＾）ﾉ♪
  *                            THE CODE GENERATOR!!!!
+ *                            EL GENERADOR DE CÓDIGO!!!!
  * ============================================================================
  */
 
@@ -1060,6 +1112,7 @@ function codeGenerator(node) {
  * ============================================================================
  *                                  (۶* ‘ヮ’)۶”
  *                         !!!!!!!!THE COMPILER!!!!!!!!
+ *                         !!!!!!!!EL COMPILADOR!!!!!!!
  * ============================================================================
  */
 
@@ -1080,6 +1133,7 @@ function compiler(input) {
   let output = codeGenerator(newAst);
 
   // and simply return the output!
+  // y simmplemente retornamos el output! 
   return output;
 }
 
@@ -1087,10 +1141,12 @@ function compiler(input) {
  * ============================================================================
  *                                   (๑˃̵ᴗ˂̵)و
  * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!YOU MADE IT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!LO HICISTE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  * ============================================================================
  */
 
 // Now I'm just exporting everything...
+// Ahora vamos a exportar cada uno de ellos...
 module.exports = {
   tokenizer,
   parser,
