@@ -8,7 +8,7 @@ moderno escrito en un JavaScript fácil de leer.
 Leer junto con la guía del código te ayudará a aprender sobre cómo la *mayoría* de los compiladores 
 funcionan de principio a fin.
 
-### [¿Quieres ir directamente al código? Click aquí](the-super-tiny-compiler-ES.js)
+### [¿Quieres ir directamente al código? Click aquí](the-super-tiny-compiler-es.js)
 
 ---
 
@@ -28,7 +28,7 @@ de entender.
 
 ### Ok, ¿Por dónde empiezo entonces?
 
-Fantástico! Diríjase a [the-super-tiny-compiler-ES.js](the-super-tiny-compiler-ES.js)
+Fantástico! Diríjase a [the-super-tiny-compiler-es.js](the-super-tiny-compiler-es.js)
 
 ### Ya estoy de vuelta, eso no tiene mucho sentido.
 
