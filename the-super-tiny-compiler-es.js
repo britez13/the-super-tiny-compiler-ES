@@ -106,42 +106,69 @@
  *
  * 1. *Parsing* is taking raw code and turning it into a more abstract
  *    representation of the code.
+ * 1. *Parseo* es tomar el código fuente y convertirlo a una representación más abstracta
+ *    del código.
+ * 
  *
  * 2. *Transformation* takes this abstract representation and manipulates to do
  *    whatever the compiler wants it to.
+ * 2. *Transformación* toma esta representación abstracta y lo manipula para hacer
+ * lo que el compilador quiera.
+ *    
  *
  * 3. *Code Generation* takes the transformed representation of the code and
  *    turns it into new code.
+ * 3. *Generación de código* toma la representación transformada del código y 
+ *    lo convierte en nuevo código. 
+ 
  */
 
 /**
  * Parsing
+ * Parseo
  * -------
  *
  * Parsing typically gets broken down into two phases: Lexical Analysis and
  * Syntactic Analysis.
+ * El parseo normalmente se divide en dos fases: Análisis Léxico y
+ * Análisis Sintáctico. 
  *
  * 1. *Lexical Analysis* takes the raw code and splits it apart into these things
  *    called tokens by a thing called a tokenizer (or lexer).
+ * 1. *Análisis Léxico* toma el código fuente y lo divide en lo que se conoce como tókenes
+ *    mediante un tokenizador (o lexer). 
  *
  *    Tokens are an array of tiny little objects that describe an isolated piece
  *    of the syntax. They could be numbers, labels, punctuation, operators,
  *    whatever.
+ *    Los tókenes son un array de pequeños objetos que describen una pieza aislada
+ *    de la sintaxis: Pueden ser números, etiquetas, puntuaciones, operadores, etc.
  *
  * 2. *Syntactic Analysis* takes the tokens and reformats them into a
  *    representation that describes each part of the syntax and their relation
  *    to one another. This is known as an intermediate representation or
  *    Abstract Syntax Tree.
+ * 2. *Análisis Sintáctico* toma los tókenes y los vuelve a formatear a una
+ *    representación que describe cada parte de la sintaxis y su relación 
+ *    entre sí. Esto se conoce como una representación intermedia o Árbol de Sistaxis
+ *    Abstracta. 
+ 
  *
  *    An Abstract Syntax Tree, or AST for short, is a deeply nested object that
  *    represents code in a way that is both easy to work with and tells us a lot
  *    of information.
+ *    Un Árbol de Sintaxis Abstracta, o AST (por sus siglas en inglés), es un objeto
+ *    anidado en profundidad que representa el código en una manera que a la vez es,
+ *    fácil de trabajar y nos brinda mucha información.
+ *
  *
  * For the following syntax:
+ * Para la siguiente sintaxis:
  *
  *   (add 2 (subtract 4 2))
  *
  * Tokens might look something like this:
+ * Los tókenes se verían algo así: 
  *
  *   [
  *     { type: 'paren',  value: '('        },
@@ -156,6 +183,7 @@
  *   ]
  *
  * And an Abstract Syntax Tree (AST) might look like this:
+ * Y un Árbol de Sintaxis Abstracta (AST) se vería así: 
  *
  *   {
  *     type: 'Program',
@@ -182,21 +210,32 @@
 
 /**
  * Transformation
+ * Transformación
  * --------------
  *
  * The next type of stage for a compiler is transformation. Again, this just
  * takes the AST from the last step and makes changes to it. It can manipulate
  * the AST in the same language or it can translate it into an entirely new
  * language.
+ * La siguiente etapa para el compilador es la transformación. De nuevo, este
+ * solo toma el AST de la fase anterior y realiza cambios a este. Puede manipular
+ * el AST en el mismo lenguaje o puede transformarlo en un lenguaje completamente
+ * nuevo. 
  *
  * Let’s look at how we would transform an AST.
+ * Veamos cómo se podría transformar un AST. 
  *
  * You might notice that our AST has elements within it that look very similar.
  * There are these objects with a type property. Each of these are known as an
  * AST Node. These nodes have defined properties on them that describe one
  * isolated part of the tree.
+ * Habrás notado que nuestro AST cuenta con elementos que son bastante similares.
+ * Son estos objetos con propiedad de tipo (type property). Cada uno de estos son
+ * conocidos como un nodo del AST. Estos nodos han definido propiedades en ellos que
+ * describen una parte aislada del árbol. 
  *
  * We can have a node for a "NumberLiteral":
+ * Podemos tener un nodo para un "NumberLiteral":
  *
  *   {
  *     type: 'NumberLiteral',
@@ -204,6 +243,7 @@
  *   }
  *
  * Or maybe a node for a "CallExpression":
+ * O tal vez un nodo para un "CallExpression":
  *
  *   {
  *     type: 'CallExpression',
@@ -215,16 +255,24 @@
  * adding/removing/replacing properties, we can add new nodes, remove nodes, or
  * we could leave the existing AST alone and create an entirely new one based
  * on it.
+ * A la hora de transformar el AST, podemos manipular los nodo 
+ * agregando/eliminando/reemplazando propiedades, podemos agregar nuevos nodos,
+ * eliminar nodos, o podemos dejar el AST así mismo y crear uno nuevo basado
+ * en él.
  *
  * Since we’re targeting a new language, we’re going to focus on creating an
  * entirely new AST that is specific to the target language.
+ * Dado que nos dirigimos a un nuevo lenguaje, vamos a centrarnos en crear un AST 
+ * completamente nuevo que sea específico del lenguaje de destino.
  *
  * Traversal
+ * Tranversal
  * ---------
  *
  * In order to navigate through all of these nodes, we need to be able to
  * traverse through them. This traversal process goes to each node in the AST
  * depth-first.
+ * Para navegar por todos estos nodos, necesitamos 
  *
  *   {
  *     type: 'Program',
