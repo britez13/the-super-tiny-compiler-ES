@@ -5,7 +5,7 @@
 Este is un ejemplo ultra simplificado de todas las piezas principales de un compilador
 moderno escrito en un JavaScript fácil de leer.
 
-Leer junto con la guía del código te ayudará a aprender sobre cómo la *mayoría* de los compiladores 
+Leer junto con la guía del código te ayudará a entender cómo la *mayoría* de los compiladores 
 funcionan de principio a fin.
 
 ### [¿Quieres ir directamente al código? Click aquí](the-super-tiny-compiler-es.js)
