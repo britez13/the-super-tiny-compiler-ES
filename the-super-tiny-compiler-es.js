@@ -113,7 +113,7 @@
  * 2. *Transformation* takes this abstract representation and manipulates to do
  *    whatever the compiler wants it to.
  * 2. *Transformación* toma esta representación abstracta y lo manipula para hacer
- * lo que el compilador quiera.
+ *    lo que el compilador quiera.
  *    
  *
  * 3. *Code Generation* takes the transformed representation of the code and
@@ -218,7 +218,7 @@
  * the AST in the same language or it can translate it into an entirely new
  * language.
  * La siguiente etapa para el compilador es la transformación. De nuevo, este
- * solo toma el AST de la fase anterior y realiza cambios a este. Puede manipular
+ * solo toma el AST de la fase anterior y realiza cambios a éste. Puede manipular
  * el AST en el mismo lenguaje o puede transformarlo en un lenguaje completamente
  * nuevo. 
  *
@@ -255,15 +255,15 @@
  * adding/removing/replacing properties, we can add new nodes, remove nodes, or
  * we could leave the existing AST alone and create an entirely new one based
  * on it.
- * A la hora de transformar el AST, podemos manipular los nodo 
+ * A la hora de transformar el AST, podemos manipular los nodos 
  * agregando/eliminando/reemplazando propiedades, podemos agregar nuevos nodos,
  * eliminar nodos, o podemos dejar el AST así mismo y crear uno nuevo basado
  * en él.
  *
  * Since we’re targeting a new language, we’re going to focus on creating an
  * entirely new AST that is specific to the target language.
- * Dado que nos dirigimos a un nuevo lenguaje, vamos a centrarnos en crear un AST 
- * completamente nuevo que sea específico del lenguaje de destino.
+ * Dado que nuestra idea es crear un nuevo lenguaje, vamos a centrarnos en crear
+ * un AST completamente nuevo que sea específico del lenguaje de destino.
  *
  * Traversal
  * Tranversal
@@ -328,7 +328,7 @@
  * The basic idea here is that we are going to create a “visitor” object that
  * has methods that will accept different node types.
  * La idea básica aquí es crear un objeto "visitante" que tiene métodos que 
- * aceptará diferente tipos de nodos.
+ * aceptará diferentes tipos de nodos.
  *
  *   var visitor = {
  *     NumberLiteral() {},
@@ -365,7 +365,7 @@
  * As we traverse down, we're going to reach branches with dead ends. As we
  * finish each branch of the tree we "exit" it. So going down the tree we
  * "enter" each node, and going back up we "exit".
- * A medidade 
+ *  
  *
  *   -> Program (enter)
  *     -> CallExpression (enter)
@@ -423,8 +423,8 @@
  * Compilers serve many different purposes, and they might need more steps than
  * I have detailed.
  * Ahora, eso no significa que cada compilador sea igual a lo que describo aquí.
- * Los compiladores sirven para muchas cosas, y pueden llegar a necesitar fases de
- * los que que he detallado. 
+ * Los compiladores sirven para muchas cosas, y pueden llegar a necesitar más fases de
+ * las que que he detallado. 
  *
  * But now you should have a general high-level idea of what most compilers look
  * like.
